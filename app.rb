@@ -17,81 +17,92 @@ require 'twitter'
 require 'dotenv'
 Dotenv.load
 
+class App
 
+  def get_scrap
+  	Scrapper.new.perform   	
+  	Finish.new.done_scrapping
+  	Index.new.start_adder
+  end
 
-  Index.new.start_scrap
+  def get_csv
+  	Townhalls_adder.new.perform  		
+  	Finish.new.done_scrapping
+  	Index.new.start_mail
+  end
 
-  user_answer = gets.chomp.upcase.to_s       #to_s convertit en string   .upcase convertit en majuscule
+  def get_twitter
+  	Twitters.new.search_user	
+  	Finish.new.done_scrapping
+  	Index.new.start_mail
+  end
+
+  def perform
+
+  	Index.new.start_scrap
+
+  	user_answer = gets.chomp.upcase.to_s       # to_s convertit en string   .upcase convertit en majuscule
    
-    while (user_answer != "Y") && (user_answer != "N")
-      puts " Je n'ai pas compris, veux tu continuer ?\nSi oui appuye sur > Y < si non appuye sur > N <"
-      print "> "
-      user_answer = gets.chomp.upcase.to_s
-    end
-
-    if user_answer == "Y"  			#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
-      Scrapper.new.perform   	
-      Finish.new.done_scrapping
-      Index.new.start_adder
-
-      user_answer = gets.chomp.upcase.to_s
-
-      while (user_answer != "Y") && (user_answer != "N")
+      while (user_answer != "Y") && (user_answer != "N")		# Tant qu'il ne répond pas correctement, relance la boucle
+      	puts "-------------------------------------------------------------------------------------------------\n"
         puts " Je n'ai pas compris, veux tu continuer ?\nSi oui appuye sur > Y < si non appuye sur > N <"
+        puts "-------------------------------------------------------------------------------------------------\n"
         print "> "
         user_answer = gets.chomp.upcase.to_s
+        get_scrap
       end
 
-      if user_answer == "Y"  		#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
-        Townhalls_adder.new.perform  		
-        Finish.new.done_scrapping
-        Index.new.start_mail
-        Index.new.start_follow
+      if user_answer == "Y" 			#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
+        get_scrap
+        user_answer = gets.chomp.upcase.to_s
 
-        #while (user_answer != "Y") && (user_answer != "N")
-          #puts " Je n'ai pas compris, veux tu continuer ? (N pour quitter, Y pour continuer ) "
-          #print "> "
-          #user_answer = gets.chomp.upcase.to_s
-        #end
 
-        #if user_answer == "Y"  		#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
-          #Json.new.send_to_json  		#lance la classe Scrapper
-          #Finish.new.done_scrapping
-          #Index.new.start_mail
+        while (user_answer != "Y") && (user_answer != "N")	# Tant qu'il ne répond pas correctement, relance la boucle
+          puts "-------------------------------------------------------------------------------------------------\n"
+          puts " Je n'ai pas compris, veux tu continuer ?\nSi oui appuye sur > Y < si non appuye sur > N <"
+          puts "-------------------------------------------------------------------------------------------------\n"
+          print "> "
+          user_answer = gets.chomp.upcase.to_s
 
-        #elsif user_answer == "N"
-          #Done.new
+          get_csv
+        end
 
-        #end
+          if user_answer == "Y"  		#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
+      	    get_csv
 
-        	while (user_answer != "Y") && (user_answer != "N")
+            Index.new.start_follow
+
+       	    user_answer = gets.chomp.upcase.to_s
+
+        	while (user_answer != "Y") && (user_answer != "N") # 	Tant qu'il ne répond pas correctement, relance la boucle
+          	  puts "-------------------------------------------------------------------------------------------------\n"
           	  puts " Je n'ai pas compris, veux tu continuer ?\nSi oui appuye sur > Y < si non appuye sur > N <"
+          	  puts "-------------------------------------------------------------------------------------------------\n"
           	  print "> "
           	  user_answer = gets.chomp.upcase.to_s
+          	  get_twitter	#lance la méthode get twitter
         	end
 
         	if user_answer == "Y"  		#si l'utilisateur tape "Y" alors il va ensuite aller chercher la classe Scrapper
-          	  Twitters.new.search_user	
-          	  Finish.new.done_scrapping
-          	  Index.new.start_mail
+       		  get_twitter	#lance la méthode get twitter
 
         	elsif user_answer == "N"
           	  Done.new.over
           	end
 
+      	  elsif user_answer == "N"
+        	Done.new.over
+    	  end
 
+        elsif user_answer == "N"
+          Done.new.over               		#si l'utilisateur a tapé "N" alors il lance la classe Done qui termine le programme
+        end
 
-
-
-
-      elsif user_answer == "N"
-        Done.new.over
       end
+end
 
+App.new.perform
 
-    elsif user_answer == "N"
-      Done.new.over               		#si l'utilisateur a tapé "N" alors il lance la classe Done qui termine le programme
-    end
 
 
 

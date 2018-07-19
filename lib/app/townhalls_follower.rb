@@ -22,34 +22,37 @@ class Twitters
 
     while x != a.size do
 
-    mots_cles = ["Mairie #{a[n]}"]
-    mots_cles.each do |name|
+      mots_cles = ["#{a[n]}"]
+      mots_cles.each do |name|
 
-      if client.user_search(name)[0] == nil
-        user << " "
-      else
-        user << client.user_search(name)[0]
+        if client.user_search(name)[0] == nil
+          user << " "
+        else
+          user << client.user_search(name)[0]
+        end
+
       end
 
+      n = n + 1
+      x = x + 1
     end
 
-  n = n + 1
-  x = x + 1
-  end
-
-  user.each do |user|
-    if user == " "
-      puts "user doesn't exist"
-    else
-      handle << "@"+user.name
+    user.each do |user|
+      if user == " "
+        puts "user doesn't exist"
+      else
+        handle << "@"+user.name
+      end
     end
-  end
-  puts handle
+    puts handle
 
-  user.each do |commune|
-    client.follow(commune)
-  end
+    user.each do |commune|
+      client.follow(commune)
+    end
+
   end
 
 end
+
+
 

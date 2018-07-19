@@ -2,13 +2,15 @@ class Finish
 
 
   def done_scrapping
-    puts "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"
+    puts "\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n"
     puts "Ca y est c'est terminé, mission accomplie !"
+    puts "-------------------------------------------------------------------------------------------------\n"
   end
 
   def over
-    puts "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"        #indispensable pour lancer la def over
+    puts "\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \n"        #indispensable pour lancer la def over
     puts " Ok, tu ne veux pas, tu préfères quitter ? \nAppuye sur > Q < pour QUITTER, ou > R < pour RECOMMENCER"
+    puts "-------------------------------------------------------------------------------------------------\n"
 
     user_answer = gets.chomp.to_s.upcase
 

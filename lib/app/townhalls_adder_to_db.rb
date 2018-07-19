@@ -31,14 +31,14 @@ class Townhalls_adder
 	ws = session.spreadsheet_by_key("1ADimUBszp7Zqx-neA02Pt5613zeQulr3s9o8q4pFJMo").worksheets[0]
 
 	i = 1	# compteur commence à 1
-	obj.each do |k,v| # Pour chaque objet du tableau, k équivaut adresses, v équivaut aux noms
+	obj.each do |k=nil,v=nil| # Pour chaque objet du tableau, k équivaut adresses, v équivaut aux noms
       ws[i, 3] = k    # Met dans la colonne 3 les adresses (k)
       ws[i, 2] = v	# Met dans la colonne 2 les noms (v)
       i += 1  
 	end
 
 	i = 1	# compteur commence à 1
-	obj1.each do |x,y| # Pour chaque objet du tableau, x équivaut aux numéros de département, y équivaut aux noms
+	obj1.each do |x=nil,y=nil| # Pour chaque objet du tableau, x équivaut aux numéros de département, y équivaut aux noms
       ws[i, 2] = x    # Met dans la colonne 2 numéros de département (x)
       ws[i, 1] = y	# Met dans la colonne 1 les noms (y)
       i += 1

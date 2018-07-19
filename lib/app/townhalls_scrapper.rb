@@ -21,17 +21,17 @@ class Scrapper
     get_all_the_urls_of_the_townhalls(@departement)
   end
 
-  def get_Bouches_du_Rhone			# Méthode qui va chercher le département "Bouches_du_Rhone" dans la page d'accueil
+  def get_Territoire_Belfort			# Méthode qui va chercher le département "Territoire de Belfort" dans la page d'accueil
     page = Nokogiri::HTML(open("http://annuaire-des-mairies.com")) 
-    page.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[13]/td[1]/a').each do |node| 
+    page.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[16]/td[4]/a').each do |node| 
 	    @departement =  node['href']  	# Transforme la data en href et range le dans la variable @departement 
     end
     get_all_the_urls_of_the_townhalls(@departement)
   end
 
-  def get_Seine_Saint_Denis			# Méthode qui va chercher le département "Seine_Saint_Denis" dans la page d'accueil
+  def get_Martinique			# Méthode qui va chercher le département "Seine_Saint_Denis" dans la page d'accueil
     page = Nokogiri::HTML(open("http://annuaire-des-mairies.com"))
-    page.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[19]/td[4]/a').each do |node| 
+    page.xpath('/html/body/div/main/section[2]/div/table/tbody/tr[23]/td[4]/a').each do |node| 
 	    @departement =  node['href'] 		# Transforme la data en href et range le dans la variable @departement 
     end
     get_all_the_urls_of_the_townhalls(@departement)	 		# Lance la méthode avec la variable @departement 
@@ -114,8 +114,8 @@ class Scrapper
     @number = []
 
     get_Hauts_de_Seine 			#lance la méthode
-    get_Bouches_du_Rhone 		#lance la méthode
-    get_Seine_Saint_Denis 		#lance la méthode
+    get_Territoire_Belfort 		#lance la méthode
+    get_Martinique 		#lance la méthode
     result						#lance la méthode
   end
 
